@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use App\Models\Review;
 use App\Models\Service;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -22,7 +23,7 @@ class DashboardController extends Controller
         $user = $request->user();
 
         if ($user->isAdmin()) {
-            return $this->adminDashboard();
+            return $this->adminDashboard($request);
         }
 
         if ($user->isStylist()) {
@@ -35,7 +36,7 @@ class DashboardController extends Controller
     /**
      * Dashboard view for administrators.
      */
-    private function adminDashboard(): View
+    private function adminDashboard(Request $request): View
     {
         $metrics = [
             'total_appointments' => Appointment::count(),
@@ -57,9 +58,38 @@ class DashboardController extends Controller
             ->orderBy('name')
             ->get();
 
-        $services = Service::orderBy('name')->get();
+        // Catálogo de servicios: orden, dirección y estado se resuelven por
+        // lista blanca; el valor de la petición nunca pasa directo a orderBy().
+        $serviceOrdenes = [
+            'nombre' => 'name',
+            'precio' => 'price',
+            'reciente' => 'created_at',
+        ];
 
-        return view('dashboard.admin', compact('metrics', 'appointments', 'stylists', 'services'));
+        $ordenSolicitado = $request->query('orden');
+        $serviceOrden = array_key_exists($ordenSolicitado, $serviceOrdenes)
+            ? $ordenSolicitado
+            : 'reciente';
+
+        $direccionSolicitada = $request->query('direccion');
+        $serviceDireccion = in_array($direccionSolicitada, ['asc', 'desc'], true)
+            ? $direccionSolicitada
+            : ($serviceOrdenes[$serviceOrden] === 'created_at' ? 'desc' : 'asc');
+
+        $estadoSolicitado = $request->query('estado');
+        $serviceEstado = in_array($estadoSolicitado, ['todos', 'activos', 'inactivos'], true)
+            ? $estadoSolicitado
+            : 'todos';
+
+        $services = Service::query()
+            ->when($serviceEstado === 'activos', fn (Builder $query) => $query->where('is_active', true))
+            ->when($serviceEstado === 'inactivos', fn (Builder $query) => $query->where('is_active', false))
+            ->orderBy($serviceOrdenes[$serviceOrden], $serviceDireccion)
+            ->orderBy('id', $serviceDireccion)
+            ->paginate(6)
+            ->withQueryString();
+
+        return view('dashboard.admin', compact('metrics', 'appointments', 'stylists', 'services', 'serviceOrden', 'serviceDireccion', 'serviceEstado'));
     }
 
     /**

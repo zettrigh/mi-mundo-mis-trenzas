@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mi Mundo Mis Trenzas | Peinados Femeninos y Trenzas a Domicilio</title>
+    <meta name="description" content="Trenzas y peinados femeninos a domicilio: estilistas profesionales llegan a tu casa con técnicas sin dolor, materiales premium y precios claros. Agenda tu cita en línea.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -13,22 +14,16 @@
     <link rel="icon" type="image/jpeg" href="{{ asset('images/logo.jpg') }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <style>
-        .font-serif-title {
-            font-family: 'Playfair Display', Georgia, serif;
-        }
-    </style>
 </head>
 <body class="bg-stone-50 text-stone-800 antialiased selection:bg-pink-500 selection:text-white">
 
     <!-- Barra de Navegación Superior -->
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-rose-100 transition-all">
+    <header x-data="{ open: false }" class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-rose-100 transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logotipo -->
                 <a href="{{ route('home') }}" class="flex items-center gap-3.5 group">
-                    <img src="{{ asset('images/logo.jpg') }}" alt="Logo Mi Mundo Mis Trenzas" class="w-13 h-13 sm:w-14 sm:h-14 rounded-full object-cover shadow-md border-2 border-pink-300 group-hover:scale-105 transition">
+                    <img src="{{ asset('images/logo.jpg') }}" alt="Logo Mi Mundo Mis Trenzas" class="h-12 w-12 sm:h-14 sm:w-14 rounded-full object-cover shadow-md border-2 border-pink-300 group-hover:scale-105 transition">
                     <div>
                         <span class="font-serif-title text-xl font-bold tracking-tight text-stone-900 group-hover:text-pink-600 transition block leading-tight">
                             Mi Mundo Mis Trenzas
@@ -44,26 +39,50 @@
                     <a href="#servicios" class="hover:text-pink-600 transition">Catálogo de Peinados</a>
                     <a href="#beneficios" class="hover:text-pink-600 transition">Por Qué a Domicilio</a>
                     <a href="#como-funciona" class="hover:text-pink-600 transition">Cómo Funciona</a>
-                    <a href="#testimonios" class="hover:text-pink-600 transition">Testimonios</a>
                 </nav>
 
                 <!-- Acciones / Autenticación -->
                 <div class="flex items-center gap-3">
-                    @auth
-                        <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition">
-                            <span>Mi Panel </span>
-                            <span class="text-xs bg-pink-800/40 px-2 py-0.5 rounded-md">{{ Auth::user()->role->label() }}</span>
-                        </a>
-                    @else
-                        <a href="{{ route('login') }}" class="px-4 py-2 rounded-xl text-stone-700 hover:text-pink-600 font-medium text-sm transition">
-                            Iniciar Sesión
-                        </a>
-                        <a href="{{ route('register') }}" class="inline-flex items-center gap-1 px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition">
-                            <span>Registrarme</span>
-                            <span class="text-xs">💖</span>
-                        </a>
-                    @endauth
+                    <!-- Botón de menú móvil -->
+                    <button @click="open = ! open" :aria-expanded="open" aria-controls="menu-movil" aria-label="Abrir menú de navegación" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl text-stone-600 hover:text-pink-600 hover:bg-stone-100 transition">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    <div class="hidden md:flex items-center gap-3">
+                        @auth
+                            <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition">
+                                <span>Mi Panel</span>
+                                <span class="text-xs bg-pink-800/40 px-2 py-0.5 rounded-md">{{ Auth::user()->role->label() }}</span>
+                            </a>
+                        @else
+                            <a href="{{ route('login') }}" class="px-4 py-2 rounded-xl text-stone-700 hover:text-pink-600 font-medium text-sm transition">
+                                Iniciar Sesión
+                            </a>
+                            <a href="{{ route('register') }}" class="inline-flex items-center gap-1 px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition">
+                                <span>Registrarme</span>
+                                <span class="text-xs">💖</span>
+                            </a>
+                        @endauth
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Menú móvil -->
+        <div id="menu-movil" @click.outside="open = false" :class="{'block': open, 'hidden': ! open}" class="hidden md:hidden border-t border-rose-100 bg-white/95 backdrop-blur-md">
+            <div class="px-4 py-3 space-y-1">
+                <a href="#servicios" @click="open = false" class="block px-3 py-2.5 rounded-xl text-sm font-medium text-stone-700 hover:bg-stone-100 hover:text-pink-700 transition">Catálogo de Peinados</a>
+                <a href="#beneficios" @click="open = false" class="block px-3 py-2.5 rounded-xl text-sm font-medium text-stone-700 hover:bg-stone-100 hover:text-pink-700 transition">Por Qué a Domicilio</a>
+                <a href="#como-funciona" @click="open = false" class="block px-3 py-2.5 rounded-xl text-sm font-medium text-stone-700 hover:bg-stone-100 hover:text-pink-700 transition">Cómo Funciona</a>
+                @auth
+                    <a href="{{ route('dashboard') }}" @click="open = false" class="block px-3 py-2.5 mt-2 rounded-xl text-sm font-semibold text-white bg-pink-600 hover:bg-pink-700 transition text-center">Ir a Mi Panel</a>
+                @else
+                    <a href="{{ route('register') }}" @click="open = false" class="block px-3 py-2.5 mt-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 transition text-center">Registrarme</a>
+                    <a href="{{ route('login') }}" @click="open = false" class="block px-3 py-2.5 rounded-xl text-sm font-medium text-stone-700 hover:bg-stone-100 hover:text-pink-700 transition text-center">Iniciar Sesión</a>
+                @endauth
             </div>
         </div>
     </header>
@@ -81,7 +100,7 @@
                         </div>
 
                         <h1 class="font-serif-title text-4xl sm:text-5xl lg:text-6xl font-extrabold text-stone-900 leading-tight">
-                            El arte del trenzado femenino en la <span class="bg-gradient-to-r from-rose-600 via-pink-600 to-amber-600 bg-clip-text text-transparent">comodidad de tu casa</span>
+                            El arte del trenzado femenino en la <span class="text-pink-600">comodidad de tu casa</span>
                         </h1>
 
                         <p class="text-lg text-stone-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
@@ -109,15 +128,15 @@
                         <div class="grid grid-cols-3 gap-4 pt-6 border-t border-rose-100/80 text-left">
                             <div>
                                 <span class="font-bold text-xl text-stone-900 block font-serif-title">100%</span>
-                                <span class="text-xs text-stone-500">A tu Domicilio</span>
+                                <span class="text-xs text-stone-600">A tu Domicilio</span>
                             </div>
                             <div>
                                 <span class="font-bold text-xl text-stone-900 block font-serif-title">Cero Dolor</span>
-                                <span class="text-xs text-stone-500">Cuidado capilar</span>
+                                <span class="text-xs text-stone-600">Cuidado capilar</span>
                             </div>
                             <div>
                                 <span class="font-bold text-xl text-stone-900 block font-serif-title">⭐ 4.9/5</span>
-                                <span class="text-xs text-stone-500">Satisfacción total</span>
+                                <span class="text-xs text-stone-600">Satisfacción total</span>
                             </div>
                         </div>
                     </div>
@@ -126,11 +145,11 @@
                     <div class="lg:col-span-5 relative">
                         <div class="relative mx-auto max-w-md lg:max-w-none">
                             <!-- Decoración de Fondo -->
-                            <div class="absolute -top-6 -left-6 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-pulse"></div>
+                            <div class="absolute -top-6 -left-6 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
                             <div class="absolute -bottom-6 -right-6 w-72 h-72 bg-amber-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
 
                             <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                                <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=900&q=80" alt="Trenzas Knotless a domicilio" class="w-full h-[460px] object-cover">
+                                <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=900&q=80" alt="Trenzas Knotless a domicilio" class="w-full h-[460px] object-cover" decoding="async">
                                 
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
                                     <div class="bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-white/40 shadow-lg text-stone-900 w-full">
@@ -154,7 +173,7 @@
         </section>
 
         <!-- Beneficios del Servicio a Domicilio -->
-        <section id="beneficios" class="py-20 bg-white">
+        <section id="beneficios" class="scroll-mt-24 py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
                     <span class="text-xs font-bold text-rose-600 uppercase tracking-widest">¿Por qué elegirnos?</span>
@@ -169,8 +188,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Tarjeta 1 -->
                     <div class="p-8 rounded-3xl bg-stone-50 border border-stone-200/80 hover:border-pink-200 hover:shadow-xl transition group">
-                        <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">
-                            🏡
+                        <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="m3 9.5 9-7 9 7" />
+                                <path d="M5 8.5V21h14V8.5" />
+                                <path d="M9 21v-6h6v6" />
+                            </svg>
                         </div>
                         <h3 class="font-serif-title text-xl font-bold text-stone-900 mb-2">Comodidad y Privacidad Total</h3>
                         <p class="text-sm text-stone-600 leading-relaxed">
@@ -180,8 +203,11 @@
 
                     <!-- Tarjeta 2 -->
                     <div class="p-8 rounded-3xl bg-stone-50 border border-stone-200/80 hover:border-pink-200 hover:shadow-xl transition group">
-                        <div class="w-14 h-14 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">
-                            ✨
+                        <div class="w-14 h-14 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 3l7 2.5V11c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5.5z" />
+                                <path d="m9 11.5 2 2 4-4" />
+                            </svg>
                         </div>
                         <h3 class="font-serif-title text-xl font-bold text-stone-900 mb-2">Técnicas Sin Tracción Excesiva</h3>
                         <p class="text-sm text-stone-600 leading-relaxed">
@@ -191,8 +217,12 @@
 
                     <!-- Tarjeta 3 -->
                     <div class="p-8 rounded-3xl bg-stone-50 border border-stone-200/80 hover:border-pink-200 hover:shadow-xl transition group">
-                        <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">
-                            💎
+                        <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M6 3h12l4 6-10 13L2 9z" />
+                                <path d="M11 3 8 9l4 13 4-13-3-6" />
+                                <path d="M2 9h20" />
+                            </svg>
                         </div>
                         <h3 class="font-serif-title text-xl font-bold text-stone-900 mb-2">Materiales y Sellado Premium</h3>
                         <p class="text-sm text-stone-600 leading-relaxed">
@@ -204,10 +234,10 @@
         </section>
 
         <!-- Catálogo de Servicios y Peinados -->
-        <section id="servicios" class="py-20 bg-stone-100/70 border-t border-b border-stone-200">
+        <section id="servicios" class="scroll-mt-24 py-20 bg-stone-100/70 border-t border-b border-stone-200">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
-                    <span class="text-xs font-bold text-pink-600 uppercase tracking-widest">Estilos y Tendencias</span>
+                    <span class="text-xs font-bold text-pink-700 uppercase tracking-widest">Estilos y Tendencias</span>
                     <h2 class="font-serif-title text-3xl sm:text-4xl font-bold text-stone-900">
                         Catálogo de Peinados Femeninos
                     </h2>
@@ -221,7 +251,7 @@
                         <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition border border-stone-200/70 flex flex-col">
                             <!-- Imagen del Peinado -->
                             <div class="h-56 overflow-hidden relative group">
-                                <img src="{{ $service->image_url }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <img src="{{ $service->image_url }}" alt="{{ $service->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" decoding="async">
                                 <div class="absolute top-4 left-4">
                                     <span class="px-3 py-1 rounded-full text-xs font-bold bg-white/95 text-stone-900 shadow-sm backdrop-blur-sm">
                                         {{ $service->category }}
@@ -247,16 +277,16 @@
 
                                 <div class="pt-4 border-t border-stone-100 flex items-center justify-between">
                                     <div>
-                                        <span class="text-xs text-stone-400 block font-medium">Tarifa del Servicio:</span>
+                                        <span class="text-xs text-stone-500 block font-medium">Tarifa del Servicio:</span>
                                         <span class="font-serif-title text-2xl font-bold text-pink-600">${{ number_format($service->price, 2) }}</span>
                                     </div>
 
                                     @auth
-                                        <a href="{{ route('dashboard') }}" class="px-4 py-2.5 rounded-xl bg-stone-900 hover:bg-pink-600 text-white text-xs font-bold transition shadow-sm">
+                                        <a href="{{ route('dashboard') }}" class="px-5 py-3 rounded-xl bg-stone-900 hover:bg-pink-600 text-white text-sm font-bold transition shadow-sm">
                                             Agendar Cita &rarr;
                                         </a>
                                     @else
-                                        <a href="{{ route('register') }}" class="px-4 py-2.5 rounded-xl bg-stone-900 hover:bg-pink-600 text-white text-xs font-bold transition shadow-sm">
+                                        <a href="{{ route('register') }}" class="px-5 py-3 rounded-xl bg-stone-900 hover:bg-pink-600 text-white text-sm font-bold transition shadow-sm">
                                             Agendar Cita &rarr;
                                         </a>
                                     @endauth
@@ -264,7 +294,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-3 text-center py-12 text-stone-400">
+                        <div class="col-span-full text-center py-16 text-stone-600">
                             No hay servicios activos disponibles en este momento.
                         </div>
                     @endforelse
@@ -273,7 +303,7 @@
         </section>
 
         <!-- Cómo Funciona el Servicio a Domicilio -->
-        <section id="como-funciona" class="py-20 bg-white">
+        <section id="como-funciona" class="scroll-mt-24 py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
                     <span class="text-xs font-bold text-rose-600 uppercase tracking-widest">Fácil y Rápido</span>
@@ -323,7 +353,7 @@
         </section>
 
         <!-- Testimonios de Clientas -->
-        <section id="testimonios" class="py-20 bg-rose-50/50">
+        {{-- <section id="testimonios" class="py-20 bg-rose-50/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
                     <span class="text-xs font-bold text-pink-600 uppercase tracking-widest">Opiniones Reales</span>
@@ -361,7 +391,7 @@
                     @endforelse
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <!-- Banner de Llamada a la Acción -->
         <section class="py-16 bg-stone-900 text-white relative overflow-hidden">
@@ -395,7 +425,7 @@
                     <img src="{{ asset('images/logo.jpg') }}" alt="Logo Mi Mundo Mis Trenzas" class="w-12 h-12 rounded-full object-cover border border-stone-700">
                     <div>
                         <span class="font-serif-title text-xl font-bold text-white block">Mi Mundo Mis Trenzas</span>
-                        <span class="text-xs text-stone-500">Gestor de Citas y Peinados Femeninos a Domicilio</span>
+                        <span class="text-xs text-stone-400">Gestor de Citas y Peinados Femeninos a Domicilio</span>
                     </div>
                 </div>
                 <div class="flex flex-wrap justify-center gap-6 text-xs text-stone-400">
@@ -404,7 +434,7 @@
                     <a href="{{ route('login') }}" class="hover:text-pink-400 transition">Iniciar Sesión</a>
                     <a href="{{ route('register') }}" class="hover:text-pink-400 transition">Registro de Clientes</a>
                 </div>
-                <div class="text-xs text-stone-600">
+                <div class="text-xs text-stone-400">
                     &copy; {{ date('Y') }} Mi Mundo Mis Trenzas. Todos los derechos reservados.
                 </div>
             </div>

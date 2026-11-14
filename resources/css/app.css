@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    /* Anillo de foco del sistema: visible y con la paleta de la marca */
+    a:focus-visible,
+    button:focus-visible {
+        outline: 2px solid theme(colors.pink.600);
+        outline-offset: 2px;
+    }
+
+    /* Respeta la preferencia de movimiento reducido */
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+    }
+}
+
+@layer components {
+    /* Tipografía display de la marca: única definición del sistema */
+    .font-serif-title {
+        font-family: 'Playfair Display', Georgia, serif;
+    }
+}
