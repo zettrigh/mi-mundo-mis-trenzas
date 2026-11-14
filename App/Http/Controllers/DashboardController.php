@@ -89,7 +89,16 @@ class DashboardController extends Controller
             ->paginate(6)
             ->withQueryString();
 
-        return view('dashboard.admin', compact('metrics', 'appointments', 'stylists', 'services', 'serviceOrden', 'serviceDireccion', 'serviceEstado'));
+        $data = compact('metrics', 'appointments', 'stylists', 'services', 'serviceOrden', 'serviceDireccion', 'serviceEstado');
+
+        // El catálogo pide su fragmento por encabezado para actualizarse sin
+        // recargar la página; así la URL y los links del paginador se mantienen
+        // canónicos, sin parámetros técnicos en la query.
+        if ($request->header('X-Fragmento') === 'servicios') {
+            return view('dashboard.partials.servicios', $data);
+        }
+
+        return view('dashboard.admin', $data);
     }
 
     /**

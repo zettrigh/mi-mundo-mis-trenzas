@@ -138,3 +138,16 @@ test('los parámetros inválidos caen al orden y filtro por defecto', function (
     $response->assertSeeInOrder(['Trenza Gamma', 'Trenza Beta', 'Trenza Alfa']);
     $response->assertSee('value="reciente" selected', false);
 });
+
+test('el fragmento del catálogo se sirve sin el layout completo', function () {
+    Service::factory()->create(['name' => 'Knotless Activo']);
+    Service::factory()->inactive()->create(['name' => 'Fulani Inactivo']);
+
+    $response = $this->actingAs($this->admin)->get('/dashboard', ['X-Fragmento' => 'servicios']);
+
+    $response->assertOk();
+    $response->assertSee('Catálogo de Servicios de Trenzado (2)');
+    $response->assertSee('Knotless Activo');
+    $response->assertSee('Fulani Inactivo');
+    $response->assertDontSee('Panel Administrativo');
+});
