@@ -7,11 +7,6 @@
                 </h2>
                 <p class="text-sm text-gray-500 mt-1">Gestión general de citas a domicilio, estilistas y servicios de Mi Mundo Mis Trenzas.</p>
             </div>
-            <div class="flex items-center gap-2">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800 border border-purple-200">
-                    Rol: Administradora
-                </span>
-            </div>
         </div>
     </x-slot>
 
@@ -40,7 +35,7 @@
                 </div>
 
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200 bg-amber-50/30">
-                    <div class="text-xs font-medium text-amber-700 uppercase tracking-wider">Por Confirmar</div>
+                    <div class="text-xs font-medium text-amber-700 uppercase tracking-wider">Pendientes</div>
                     <div class="mt-2 flex items-baseline justify-between">
                         <span class="text-3xl font-extrabold text-amber-600">{{ $metrics['pending_appointments'] }}</span>
                         <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">Pendientes</span>

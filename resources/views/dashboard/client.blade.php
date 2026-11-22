@@ -82,7 +82,7 @@
                             <!-- Dirección -->
                             <div>
                                 <label for="address" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Dirección Exacta del Domicilio</label>
-                                <textarea id="address" name="address" rows="2" required placeholder="Calle, edificio/casa, piso, número de apartamento..." class="w-full text-sm rounded-xl border-gray-300 focus:border-pink-500 focus:ring-pink-500">{{ old('address', $user->address) }}</textarea>
+                                <textarea id="address" name="address" rows="2" required placeholder="Calle, edificio/casa, piso, número de apartamento..." class="w-full text-sm rounded-xl border-gray-300 focus:border-pink-500 focus:ring-pink-500"></textarea>
                             </div>
 
                             <!-- Zona / Sector -->
