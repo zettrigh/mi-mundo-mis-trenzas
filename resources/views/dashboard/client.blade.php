@@ -7,11 +7,6 @@
                 </h2>
                 <p class="text-sm text-gray-500 mt-1">Hola, {{ $user->name }}. Agenda tu peinado favorito o revisa el estado de tus citas a domicilio.</p>
             </div>
-            <div class="flex items-center gap-2">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-pink-100 text-pink-800 border border-pink-200">
-                    Cliente Consentida
-                </span>
-            </div>
         </div>
     </x-slot>
 
@@ -56,7 +51,7 @@
                             <!-- Servicio -->
                             <div>
                                 <label for="service_id" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Servicio / Estilo</label>
-                                <select id="service_id" name="service_id" required class="w-full text-sm rounded-xl border-gray-300 focus:border-pink-500 focus:ring-pink-500">
+                                <select id="service_id" name="service_id" class="w-full text-sm rounded-xl border-gray-300 focus:border-pink-500 focus:ring-pink-500">
                                     <option value="">Selecciona un estilo...</option>
                                     @foreach($availableServices as $srv)
                                         <option value="{{ $srv->id }}" @selected(old('service_id') == $srv->id)>
@@ -69,20 +64,20 @@
                             <!-- Fecha y Hora -->
                             <div>
                                 <label for="scheduled_at" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Fecha y Hora Deseada</label>
-                                <input type="datetime-local" id="scheduled_at" name="scheduled_at" value="{{ old('scheduled_at') }}" required min="{{ now()->addDay()->format('Y-m-d\TH:i') }}" class="w-full text-sm rounded-xl border-gray-300 focus:border-pink-500 focus:ring-pink-500">
+                                <input type="datetime-local" id="scheduled_at" name="scheduled_at" value="{{ old('scheduled_at') }}" min="{{ now()->addDay()->format('Y-m-d\TH:i') }}" class="w-full text-sm rounded-xl border-gray-300 focus:border-pink-500 focus:ring-pink-500">
                                 <span class="text-[11px] text-gray-400">Recomendamos reservar con al menos 24 horas de antelación.</span>
                             </div>
 
                             <!-- Teléfono de contacto -->
                             <div>
                                 <label for="client_phone" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Teléfono / WhatsApp</label>
-                                <input type="text" id="client_phone" name="client_phone" value="{{ old('client_phone', $user->phone) }}" required placeholder="+58 412 1234567" class="w-full text-sm rounded-xl border-gray-300 focus:border-pink-500 focus:ring-pink-500">
+                                <input type="text" id="client_phone" name="client_phone" value="{{ old('client_phone', $user->phone) }}" placeholder="+58 412 1234567" class="w-full text-sm rounded-xl border-gray-300 focus:border-pink-500 focus:ring-pink-500">
                             </div>
 
                             <!-- Dirección -->
                             <div>
                                 <label for="address" class="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Dirección Exacta del Domicilio</label>
-                                <textarea id="address" name="address" rows="2" required placeholder="Calle, edificio/casa, piso, número de apartamento..." class="w-full text-sm rounded-xl border-gray-300 focus:border-pink-500 focus:ring-pink-500"></textarea>
+                                <textarea id="address" name="address" rows="2" placeholder="Calle, edificio/casa, piso, número de apartamento..." class="w-full text-sm rounded-xl border-gray-300 focus:border-pink-500 focus:ring-pink-500"></textarea>
                             </div>
 
                             <!-- Zona / Sector -->
@@ -234,7 +229,7 @@
                                             <form method="POST" action="{{ route('appointments.reviews.store', $past) }}" class="mt-2 p-3 bg-gray-50 rounded-xl border border-gray-200 flex flex-col sm:flex-row sm:items-center gap-2 text-xs">
                                                 @csrf
                                                 <span class="font-semibold text-gray-700">Califica el servicio:</span>
-                                                <select name="rating" required class="text-xs rounded-lg border-gray-300 py-1">
+                                                <select name="rating" class="text-xs rounded-lg border-gray-300 py-1">
                                                     <option value="5">Excelente</option>
                                                     <option value="4">Muy Bueno</option>
                                                     <option value="3">Bueno</option>
