@@ -6,7 +6,7 @@ Resolve one stable target, run two independent assessments, synthesize a design 
 
 - Assessment A (design review) and Assessment B (detector/browser evidence) are both required, except on a native platform (see Assessment Orchestration).
 - Assessment A and B MUST run as two isolated sub-agents whenever a sub-agent/Task tool is exposed. Running them inline in this context is "possible" but is NOT permitted; it is a degraded run. Inline is allowed ONLY when no sub-agent tool exists (or the user declined, on harnesses that ask). Native platforms run A alone (see Assessment Orchestration).
-- If you degrade for any reason, the report's first line MUST be a banner: `⚠️ DEGRADED: single-context (<reason>)`. A silent degraded critique is a failed critique.
+- If you degrade for any reason, the report's first line MUST be a banner: `[!] DEGRADED: single-context (<reason>)`. A silent degraded critique is a failed critique.
 - Assessment A must finish before detector findings enter the parent synthesis context. Detector output is deterministic, but it still anchors judgment.
 - A skipped detector is a failed critique run unless `impeccable detect` is missing or crashes after a real attempt, or the platform is native (see Assessment Orchestration).
 - Viewable targets require browser inspection when available.
@@ -45,9 +45,9 @@ Codex sub-agent gate (overrides the default above; Codex's permission model requ
 - Asking is the normal path, not a degradation. Approving and spawning is the dual-agent path; do not emit the degraded banner just for asking.
 - If `spawn_agent` is exposed and the user explicitly allowed sub-agents, delegation, or parallel agent work, spawn A and B immediately (for a desktop app, A first and B once A has finished, as the default gate above says).
 - If `spawn_agent` is exposed but the user did not explicitly allow sub-agents, ask exactly once: "Impeccable critique is designed to run two independent sub-agents for an unanchored assessment. May I use sub-agents for this critique?" Then stop until the user answers.
-- If allowed, spawn A and B (in sequence for a desktop app). If declined, run sequentially and lead the report with `⚠️ DEGRADED: single-context (sub-agents declined by user)`.
-- If `spawn_agent` is not exposed, do not ask; run sequentially and lead with `⚠️ DEGRADED: single-context (spawn_agent unavailable in this session)`.
-- If spawning fails after permission, run sequentially and lead with `⚠️ DEGRADED: single-context (sub-agent spawn failed: <exact error>)`.
+- If allowed, spawn A and B (in sequence for a desktop app). If declined, run sequentially and lead the report with `[!] DEGRADED: single-context (sub-agents declined by user)`.
+- If `spawn_agent` is not exposed, do not ask; run sequentially and lead with `[!] DEGRADED: single-context (spawn_agent unavailable in this session)`.
+- If spawning fails after permission, run sequentially and lead with `[!] DEGRADED: single-context (sub-agent spawn failed: <exact error>)`.
 Prefer `fork_context: false` with self-contained prompts containing cwd, target, live URL, references, product context, and output contract. If using `fork_context: true`, omit `agent_type`, `model`, and `reasoning_effort`.
 
 If browser automation is available, each assessment creates its own new tab. Never reuse an existing tab, even if it is already at the right URL. Desktop apps are the exception (see **Desktop apps** under Assessment B).
@@ -119,7 +119,7 @@ Structure your feedback as a design director would:
 
 The report's first line MUST declare how the assessments were run, so a degraded run is never silent:
 - Dual-agent: `Method: dual-agent (A: <agent-id> · B: <agent-id>)`
-- Degraded: `⚠️ DEGRADED: single-context (<reason, e.g. no sub-agent tool exposed>)`
+- Degraded: `[!] DEGRADED: single-context (<reason, e.g. no sub-agent tool exposed>)`
 - Native: `Method: design review only (detector not applicable, native platform)`
 
 #### Design Health Score

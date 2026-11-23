@@ -120,7 +120,7 @@
                             @endauth
 
                             <a href="#servicios" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-white hover:bg-stone-100 text-stone-800 font-bold text-base border border-stone-200 shadow-sm transition flex items-center justify-center gap-2">
-                                Ver Catálogo y Precios &darr;
+                                <i data-lucide="arrow-down" class="h-4 w-4"></i> Ver Catálogo y Precios
                             </a>
                         </div>
 
@@ -282,12 +282,12 @@
                                     </div>
 
                                     @auth
-                                        <a href="{{ route('dashboard') }}" class="px-5 py-3 rounded-xl bg-stone-900 hover:bg-pink-600 text-white text-sm font-bold transition shadow-sm">
-                                            Agendar Cita &rarr;
+                                        <a href="{{ route('dashboard') }}" class="px-5 py-3 rounded-xl bg-stone-900 hover:bg-pink-600 text-white text-sm font-bold transition shadow-sm inline-flex items-center gap-1.5">
+                                            <i data-lucide="arrow-right" class="h-4 w-4"></i> Agendar Cita
                                         </a>
                                     @else
-                                        <a href="{{ route('register') }}" class="px-5 py-3 rounded-xl bg-stone-900 hover:bg-pink-600 text-white text-sm font-bold transition shadow-sm">
-                                            Agendar Cita &rarr;
+                                        <a href="{{ route('register') }}" class="px-5 py-3 rounded-xl bg-stone-900 hover:bg-pink-600 text-white text-sm font-bold transition shadow-sm inline-flex items-center gap-1.5">
+                                            <i data-lucide="arrow-right" class="h-4 w-4"></i> Agendar Cita
                                         </a>
                                     @endauth
                                 </div>

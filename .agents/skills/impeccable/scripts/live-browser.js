@@ -6329,7 +6329,7 @@
 
     const head = el('div', { display: 'flex', alignItems: 'center', gap: '8px' });
     const glyph = el('span', { fontSize: '13px', lineHeight: '1', color: 'oklch(62% 0.19 30)', flexShrink: '0' });
-    glyph.textContent = '⚠';
+    glyph.textContent = '!';
     head.appendChild(glyph);
     const title = el('span', { fontWeight: '600', flex: '1' });
     title.textContent = mountErrorState.variant > 0

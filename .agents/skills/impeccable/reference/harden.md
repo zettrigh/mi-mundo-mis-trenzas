@@ -91,10 +91,10 @@ Systematically improve resilience:
 - Avoid fixed widths on text containers
 
 ```jsx
-// ❌ Bad: Assumes short English text
+// Bad: Assumes short English text
 <button className="w-24">Submit</button>
 
-// ✅ Good: Adapts to content
+// Good: Adapts to content
 <button className="px-4 py-2">Submit</button>
 ```
 
@@ -115,7 +115,7 @@ border-inline-end: 1px solid; /* Not border-right */
 - Support locale-aware digits. Persian (`fa-IR`) and Arabic locales use Eastern Arabic-Indic numerals (۰-۹ and ٠-٩). Use `Intl.NumberFormat` with the correct locale rather than hardcoding Western digits.
 
 ```javascript
-// ✅ Locale-aware digit formatting
+// Locale-aware digit formatting
 new Intl.NumberFormat('fa-IR').format(1234); // ۱٬۲۳۴
 new Intl.NumberFormat('ar-SA').format(1234); // ١٬٢٣٤
 ```
@@ -123,7 +123,7 @@ new Intl.NumberFormat('ar-SA').format(1234); // ١٬٢٣٤
 - Respect calendar systems. Persian users expect the Solar Hijri (Jalali) calendar; many Arabic-speaking users expect the Hijri (Islamic) calendar. Use `Intl.DateTimeFormat` with the appropriate locale or calendar parameter.
 
 ```javascript
-// ✅ Locale-appropriate calendar
+// Locale-appropriate calendar
 new Intl.DateTimeFormat('fa-IR').format(new Date());
 new Intl.DateTimeFormat('ar-SA-u-ca-islamic').format(new Date());
 ```
@@ -136,7 +136,7 @@ new Intl.DateTimeFormat('ar-SA-u-ca-islamic').format(new Date());
 
 **Date/Time formatting**:
 ```javascript
-// ✅ Use Intl API for proper formatting
+// Use Intl API for proper formatting
 new Intl.DateTimeFormat('en-US').format(date); // 1/15/2024
 new Intl.DateTimeFormat('de-DE').format(date); // 15.1.2024
 
@@ -148,10 +148,10 @@ new Intl.NumberFormat('en-US', {
 
 **Pluralization**:
 ```javascript
-// ❌ Bad: Assumes English pluralization
+// Bad: Assumes English pluralization
 `${count} item${count !== 1 ? 's' : ''}`
 
-// ✅ Good: Use proper i18n library
+// Good: Use proper i18n library
 t('items', { count }) // Handles complex plural rules
 ```
 

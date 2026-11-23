@@ -1,6 +1,8 @@
 import Alpine from 'alpinejs';
 
 import {
+    ArrowDown,
+    ArrowRight,
     Calendar,
     Car,
     CircleCheck,
@@ -23,6 +25,8 @@ import './catalogo-servicios';
 
 createIcons({
     icons: {
+        ArrowDown,
+        ArrowRight,
         Calendar,
         Car,
         CircleCheck,

@@ -30,7 +30,7 @@ The salon travels to the client. Neighboring options are fixed-location salons o
 - WhatsApp is the real coordination channel between client and business; the app supplements it (appointment code, status record) and never replaces the human conversation.
 - Payment always happens outside the app — cash or transfer at the door; the platform never processes payment.
 - Service is delivered in the client's home; every appointment carries address, zone, client phone, hair details, and access notes (e.g., intercom, elevator).
-- This is a school/course project: seeded data and homepage claims (e.g., "⭐ 4.9/5") are illustrative placeholders, not evidence.
+- This is a school/course project: seeded data and homepage claims (e.g., "4.9/5") are illustrative placeholders, not evidence.
 
 ## Capabilities and Constraints
 
@@ -55,7 +55,7 @@ The salon travels to the client. Neighboring options are fixed-location salons o
 
 - Working Laravel app (routes, controllers, Blade views): welcome landing page, role dashboards (admin/stylist/client), Breeze auth, full appointment flow, review flow.
 - Seed data (`database/seeders/DatabaseSeeder.php`): 1 administrator (Carla Gómez), 2 stylists (Yomaira Martínez — Knotless/Fulani, Zona Norte; Sofía Valderrama — Box Braids/Twists/Eventos, Zona Este y Centro), 1 client (Valeria Morales), 6 services in 6 categories at $35–$60 and 120–270 minutes, 3 sample appointments, 1 five-star review. All seeded demo content for the school-project context — not real customers, reviews, or work photos (service images are Unsplash URLs).
-- Absences future work must not dress up as proof: no real testimonials, no real rating history, no photo library of actual client work, no business metrics. Homepage stats ("100%", "Cero Dolor", "⭐ 4.9/5") are placeholder copy.
+- Absences future work must not dress up as proof: no real testimonials, no real rating history, no photo library of actual client work, no business metrics. Homepage stats ("100%", "Cero Dolor", "4.9/5") are placeholder copy.
 
 ## Product Principles
 

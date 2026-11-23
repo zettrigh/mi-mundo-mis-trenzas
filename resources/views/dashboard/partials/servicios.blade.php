@@ -10,7 +10,7 @@
                 @endif
             </p>
         </div>
-        <a href="{{ route('home') }}#servicios" class="text-xs text-pink-600 hover:underline whitespace-nowrap">Ver en la Web &rarr;</a>
+        <a href="{{ route('home') }}#servicios" class="text-xs text-pink-600 hover:underline whitespace-nowrap inline-flex items-center gap-1"><i data-lucide="arrow-right" class="h-3.5 w-3.5"></i> Ver en la Web</a>
     </div>
 
     <div class="space-y-3">
