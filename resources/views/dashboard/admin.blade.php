@@ -3,7 +3,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
                 <h2 class="font-bold text-2xl text-gray-800 leading-tight flex items-center gap-2">
-                    <span>👑</span> {{ __('Panel Administrativo') }}
+                    <i data-lucide="crown" class="h-6 w-6"></i> {{ __('Panel Administrativo') }}
                 </h2>
                 <p class="text-sm text-gray-500 mt-1">Gestión general de citas a domicilio, estilistas y servicios de Mi Mundo Mis Trenzas.</p>
             </div>
@@ -100,7 +100,7 @@
                                     <td class="py-4 px-6 max-w-xs">
                                         <div class="text-xs text-gray-800 truncate" title="{{ $appointment->address }}">{{ $appointment->address }}</div>
                                         @if($appointment->zone)
-                                            <span class="inline-block mt-0.5 text-[11px] font-medium text-gray-500">📍 {{ $appointment->zone }}</span>
+                                            <span class="inline-flex items-center gap-1 mt-0.5 text-[11px] font-medium text-gray-500"><i data-lucide="map-pin" class="h-3 w-3"></i> {{ $appointment->zone }}</span>
                                         @endif
                                     </td>
 
@@ -166,7 +166,7 @@
                             <div class="p-4 rounded-xl border border-gray-100 bg-gray-50/50 flex items-start justify-between gap-4">
                                 <div>
                                     <div class="font-bold text-gray-900">{{ $stylist->name }}</div>
-                                    <div class="text-xs text-gray-500 mt-0.5">📞 {{ $stylist->phone ?? 'Sin teléfono registrado' }} • {{ $stylist->email }}</div>
+                                    <div class="text-xs text-gray-500 mt-0.5 inline-flex items-center gap-1"><i data-lucide="phone" class="h-3.5 w-3.5"></i> {{ $stylist->phone ?? 'Sin teléfono registrado' }} • {{ $stylist->email }}</div>
                                     <p class="text-xs text-gray-600 mt-2">{{ $stylist->bio ?? 'Trenzadora profesional especializada en servicio a domicilio.' }}</p>
                                 </div>
                                 <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-semibold whitespace-nowrap">

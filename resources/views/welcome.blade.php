@@ -63,7 +63,7 @@
                             </a>
                             <a href="{{ route('register') }}" class="inline-flex items-center gap-1 px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition">
                                 <span>Registrarme</span>
-                                <span class="text-xs">💖</span>
+                                <i data-lucide="heart" class="h-3.5 w-3.5"></i>
                             </a>
                         @endauth
                     </div>
@@ -96,7 +96,7 @@
                     <!-- Texto Principal -->
                     <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
                         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-100/80 border border-pink-200 text-pink-800 text-xs font-bold uppercase tracking-wider">
-                            <span>✨</span> Servicio Profesional a la Puerta de tu Hogar
+                            <i data-lucide="sparkles" class="h-3.5 w-3.5"></i> Servicio Profesional a la Puerta de tu Hogar
                         </div>
 
                         <h1 class="font-serif-title text-4xl sm:text-5xl lg:text-6xl font-extrabold text-stone-900 leading-tight">
@@ -111,11 +111,11 @@
                         <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                             @auth
                                 <a href="{{ route('dashboard') }}" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold text-base shadow-xl shadow-pink-500/20 hover:scale-105 transition flex items-center justify-center gap-2">
-                                    <span>📅</span> Agendar Cita en Mi Panel
+                                    <i data-lucide="calendar" class="h-5 w-5"></i> Agendar Cita en Mi Panel
                                 </a>
                             @else
                                 <a href="{{ route('register') }}" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold text-base shadow-xl shadow-pink-500/20 hover:scale-105 transition flex items-center justify-center gap-2">
-                                    <span>💖</span> Agendar Cita a Domicilio
+                                    <i data-lucide="heart" class="h-5 w-5"></i> Agendar Cita a Domicilio
                                 </a>
                             @endauth
 
@@ -135,7 +135,7 @@
                                 <span class="text-xs text-stone-600">Cuidado capilar</span>
                             </div>
                             <div>
-                                <span class="font-bold text-xl text-stone-900 block font-serif-title">⭐ 4.9/5</span>
+                                <span class="font-bold text-xl text-stone-900 block font-serif-title"><i data-lucide="star" class="h-4 w-4 fill-amber-400 text-amber-400 inline-block align-[-2px]"></i> 4.9/5</span>
                                 <span class="text-xs text-stone-600">Satisfacción total</span>
                             </div>
                         </div>
@@ -155,7 +155,7 @@
                                     <div class="bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-white/40 shadow-lg text-stone-900 w-full">
                                         <div class="flex items-center gap-3">
                                             <div class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold">
-                                                ⭐
+                                                <i data-lucide="star" class="h-5 w-5 fill-current"></i>
                                             </div>
                                             <div>
                                                 <div class="font-bold text-sm">Servicio VIP a Domicilio</div>
@@ -258,8 +258,8 @@
                                     </span>
                                 </div>
                                 <div class="absolute top-4 right-4">
-                                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-stone-900/80 text-white shadow-sm backdrop-blur-sm">
-                                        ⏱ {{ $service->estimated_duration_minutes }} min
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-stone-900/80 text-white shadow-sm backdrop-blur-sm inline-flex items-center gap-1">
+                                        <i data-lucide="clock" class="h-3.5 w-3.5"></i> {{ $service->estimated_duration_minutes }} min
                                     </span>
                                 </div>
                             </div>
@@ -352,47 +352,6 @@
             </div>
         </section>
 
-        <!-- Testimonios de Clientas -->
-        {{-- <section id="testimonios" class="py-20 bg-rose-50/50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
-                    <span class="text-xs font-bold text-pink-600 uppercase tracking-widest">Opiniones Reales</span>
-                    <h2 class="font-serif-title text-3xl sm:text-4xl font-bold text-stone-900">
-                        Lo que Dicen Nuestras Clientas
-                    </h2>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    @forelse($reviews as $rev)
-                        <div class="bg-white p-8 rounded-3xl shadow-sm border border-rose-100 flex flex-col justify-between space-y-4">
-                            <div>
-                                <div class="text-amber-400 text-lg mb-3">
-                                    {{ str_repeat('★', $rev->rating) }}
-                                </div>
-                                <p class="text-stone-700 text-sm italic leading-relaxed">
-                                    "{{ $rev->comment }}"
-                                </p>
-                            </div>
-                            <div class="pt-4 border-t border-stone-100 flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-600 font-bold flex items-center justify-center text-sm">
-                                    {{ substr($rev->client->name, 0, 1) }}
-                                </div>
-                                <div>
-                                    <div class="font-bold text-sm text-stone-900">{{ $rev->client->name }}</div>
-                                    <div class="text-[11px] text-stone-400">Servicio: {{ $rev->appointment->service->name }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-span-3 bg-white p-8 rounded-3xl shadow-sm text-center text-stone-500">
-                            "La comodidad de que vengan a tu casa con una atención tan cálida y profesional es inigualable. 100% recomendado."
-                            <div class="mt-3 font-bold text-stone-900 text-sm">— Valeria Morales</div>
-                        </div>
-                    @endforelse
-                </div>
-            </div>
-        </section> --}}
-
         <!-- Banner de Llamada a la Acción -->
         <section class="py-16 bg-stone-900 text-white relative overflow-hidden">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
@@ -405,11 +364,11 @@
                 <div class="pt-2">
                     @auth
                         <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-bold text-base shadow-xl transition transform hover:scale-105">
-                            <span>📅</span> Ir a mi Panel de Citas
+                            <i data-lucide="calendar" class="h-5 w-5"></i> Ir a mi Panel de Citas
                         </a>
                     @else
                         <a href="{{ route('register') }}" class="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-bold text-base shadow-xl transition transform hover:scale-105">
-                            <span>✨</span> Crear Mi Cuenta y Agendar
+                            <i data-lucide="sparkles" class="h-5 w-5"></i> Crear Mi Cuenta y Agendar
                         </a>
                     @endauth
                 </div>

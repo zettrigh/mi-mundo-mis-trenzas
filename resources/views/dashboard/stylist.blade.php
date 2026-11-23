@@ -3,7 +3,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
                 <h2 class="font-bold text-2xl text-gray-800 leading-tight flex items-center gap-2">
-                    <span>✨</span> {{ __('Panel de Estilista a Domicilio') }}
+                    <i data-lucide="sparkles" class="h-6 w-6"></i> {{ __('Panel de Estilista a Domicilio') }}
                 </h2>
                 <p class="text-sm text-gray-500 mt-1">Bienvenida, {{ $user->name }}. Aquí tienes tu itinerario de visitas y citas asignadas.</p>
             </div>
@@ -58,7 +58,7 @@
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
                     <div class="text-xs font-medium text-gray-500 uppercase tracking-wider">Calificación Promedio</div>
                     <div class="mt-2 flex items-baseline justify-between">
-                        <span class="text-3xl font-extrabold text-amber-500">⭐ {{ $metrics['average_rating'] }}</span>
+                        <span class="text-3xl font-extrabold text-amber-500 inline-flex items-center gap-1.5"><i data-lucide="star" class="h-6 w-6 fill-current"></i> {{ $metrics['average_rating'] }}</span>
                         <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">{{ $metrics['reviews_count'] }} reseñas</span>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                                     <div>
                                         <span class="text-xs font-mono font-bold text-pink-600">#{{ $appointment->appointment_code }}</span>
                                         <h4 class="font-bold text-base text-gray-900 mt-0.5">{{ $appointment->service->name }}</h4>
-                                        <p class="text-xs text-gray-500 mt-0.5">⏱ Duración estimada: {{ $appointment->service->estimated_duration_minutes }} min</p>
+                                        <p class="text-xs text-gray-500 mt-0.5 inline-flex items-center gap-1"><i data-lucide="clock" class="h-3.5 w-3.5"></i> Duración estimada: {{ $appointment->service->estimated_duration_minutes }} min</p>
                                     </div>
                                     <span class="px-2.5 py-1 rounded-full text-xs font-semibold border {{ $appointment->status->badgeClasses() }}">
                                         {{ $appointment->status->label() }}
@@ -101,17 +101,17 @@
 
                                 <div class="py-3 space-y-2 text-sm text-gray-700">
                                     <div class="flex items-center gap-2 text-xs">
-                                        <span class="text-gray-400">📅 Fecha y Hora:</span>
+                                        <span class="text-gray-400 inline-flex items-center gap-1"><i data-lucide="calendar" class="h-3.5 w-3.5"></i> Fecha y Hora:</span>
                                         <span class="font-semibold text-gray-900">{{ $appointment->scheduled_at->translatedFormat('l, d F Y - h:i A') }}</span>
                                     </div>
 
                                     <div class="flex items-center gap-2 text-xs">
-                                        <span class="text-gray-400">👤 Cliente:</span>
+                                        <span class="text-gray-400 inline-flex items-center gap-1"><i data-lucide="user" class="h-3.5 w-3.5"></i> Cliente:</span>
                                         <span class="font-semibold text-gray-900">{{ $appointment->client->name }}</span>
                                     </div>
 
                                     <div class="flex items-start gap-2 text-xs">
-                                        <span class="text-gray-400 shrink-0">📍 Dirección:</span>
+                                        <span class="text-gray-400 shrink-0 inline-flex items-center gap-1"><i data-lucide="map-pin" class="h-3.5 w-3.5"></i> Dirección:</span>
                                         <div class="font-medium text-gray-900">
                                             {{ $appointment->address }}
                                             @if($appointment->zone)
@@ -140,11 +140,11 @@
                                             $cleanPhone = preg_replace('/[^0-9]/', '', $appointment->client_phone);
                                         @endphp
                                         <a href="https://wa.me/{{ $cleanPhone }}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 text-xs font-semibold transition">
-                                            <span>💬 WhatsApp</span>
+                                            <i data-lucide="message-circle" class="h-3.5 w-3.5"></i> WhatsApp
                                         </a>
 
                                         <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($appointment->address . ' ' . $appointment->zone) }}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 text-xs font-semibold transition">
-                                            <span>🗺 Ver Mapa</span>
+                                            <i data-lucide="map" class="h-3.5 w-3.5"></i> Ver Mapa
                                         </a>
                                     </div>
 
@@ -154,13 +154,13 @@
 
                                         @if($appointment->status === \App\Enums\AppointmentStatus::Confirmed)
                                             <input type="hidden" name="status" value="in_progress">
-                                            <button type="submit" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-semibold shadow-sm transition">
-                                                🚗 En Camino / Iniciar
+                                            <button type="submit" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-semibold shadow-sm transition inline-flex items-center gap-1.5">
+                                                <i data-lucide="car" class="h-3.5 w-3.5"></i> En Camino / Iniciar
                                             </button>
                                         @elseif($appointment->status === \App\Enums\AppointmentStatus::InProgress)
                                             <input type="hidden" name="status" value="completed">
-                                            <button type="submit" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition">
-                                                ✅ Marcar Completado
+                                            <button type="submit" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition inline-flex items-center gap-1.5">
+                                                <i data-lucide="circle-check" class="h-3.5 w-3.5"></i> Marcar Completado
                                             </button>
                                         @endif
                                     </form>
@@ -184,7 +184,7 @@
                                 </div>
                                 @if($completed->review)
                                     <div class="mt-2 text-xs bg-amber-50 border border-amber-200 p-2.5 rounded-lg text-amber-900">
-                                        <div class="font-semibold text-amber-700">Calificación del cliente: {{ str_repeat('⭐', $completed->review->rating) }}</div>
+                                        <div class="font-semibold text-amber-700">Calificación del cliente: {{ $completed->review->rating }}/5</div>
                                         @if($completed->review->comment)
                                             <p class="mt-1 italic">"{{ $completed->review->comment }}"</p>
                                         @endif

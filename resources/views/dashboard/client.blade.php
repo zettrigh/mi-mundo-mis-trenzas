@@ -3,7 +3,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
                 <h2 class="font-bold text-2xl text-gray-800 leading-tight flex items-center gap-2">
-                    <span>💖</span> {{ __('Mi Espacio de Citas') }}
+                    <i data-lucide="heart" class="h-6 w-6"></i> {{ __('Mi Espacio de Citas') }}
                 </h2>
                 <p class="text-sm text-gray-500 mt-1">Hola, {{ $user->name }}. Agenda tu peinado favorito o revisa el estado de tus citas a domicilio.</p>
             </div>
@@ -45,7 +45,7 @@
                 <div class="lg:col-span-1">
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-6">
                         <div class="flex items-center gap-2 mb-4">
-                            <span class="text-xl">✨</span>
+                            <i data-lucide="sparkles" class="h-5 w-5"></i>
                             <h3 class="font-bold text-lg text-gray-900">Agendar Cita a Domicilio</h3>
                         </div>
                         <p class="text-xs text-gray-500 mb-6">Elige el estilo que deseas y una de nuestras estilistas irá directamente a tu hogar.</p>
@@ -104,7 +104,7 @@
                             </div>
 
                             <button type="submit" class="w-full py-3 px-4 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
-                                <span>📅</span> Reservar Mi Cita a Domicilio
+                                <i data-lucide="calendar" class="h-5 w-5"></i> Reservar Mi Cita a Domicilio
                             </button>
                         </form>
                     </div>
@@ -127,7 +127,7 @@
 
                         @if($activeAppointments->isEmpty())
                             <div class="text-center py-10 text-gray-400">
-                                <span class="text-4xl block mb-2">💆‍♀️</span>
+                                <i data-lucide="calendar" class="h-12 w-12 block mx-auto mb-2"></i>
                                 <p class="text-sm font-medium text-gray-600">No tienes ninguna cita agendada actualmente.</p>
                                 <p class="text-xs text-gray-400 mt-1">Usa el formulario lateral para programar tu primera sesión a domicilio.</p>
                             </div>
@@ -224,7 +224,7 @@
                                     @if($past->status === \App\Enums\AppointmentStatus::Completed)
                                         @if($past->review)
                                             <div class="mt-2 text-xs p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-amber-900">
-                                                <span class="font-bold">Tu Calificación:</span> {{ str_repeat('⭐', $past->review->rating) }}
+                                                <span class="font-bold">Tu Calificación:</span> {{ $past->review->rating }}/5
                                                 @if($past->review->comment)
                                                     <p class="italic mt-0.5">"{{ $past->review->comment }}"</p>
                                                 @endif
@@ -235,11 +235,11 @@
                                                 @csrf
                                                 <span class="font-semibold text-gray-700">Califica el servicio:</span>
                                                 <select name="rating" required class="text-xs rounded-lg border-gray-300 py-1">
-                                                    <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>
-                                                    <option value="4">⭐⭐⭐⭐ (Muy Bueno)</option>
-                                                    <option value="3">⭐⭐⭐ (Bueno)</option>
-                                                    <option value="2">⭐⭐ (Regular)</option>
-                                                    <option value="1">⭐ (Malo)</option>
+                                                    <option value="5">Excelente</option>
+                                                    <option value="4">Muy Bueno</option>
+                                                    <option value="3">Bueno</option>
+                                                    <option value="2">Regular</option>
+                                                    <option value="1">Malo</option>
                                                 </select>
                                                 <input type="text" name="comment" placeholder="Comentario sobre el peinado y puntualidad..." class="text-xs rounded-lg border-gray-300 flex-1 py-1">
                                                 <button type="submit" class="px-3 py-1 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-lg">
