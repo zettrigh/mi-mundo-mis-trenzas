@@ -27,6 +27,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'cedula' => fake()->unique()->numerify('########'),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'role' => UserRole::Client,

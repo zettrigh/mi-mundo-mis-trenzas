@@ -194,6 +194,7 @@ return [
         'amount' => 'monto',
         'available' => 'disponible',
         'category' => 'categoría',
+        'cedula' => 'cédula de identidad',
         'comment' => 'comentario',
         'description' => 'descripción',
         'email' => 'correo electrónico',
