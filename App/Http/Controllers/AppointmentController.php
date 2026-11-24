@@ -23,13 +23,56 @@ class AppointmentController extends Controller
         $user = $request->user();
 
         $validated = $request->validate([
-            'service_id' => ['required', 'exists:services,id'],
-            'scheduled_at' => ['required', 'date', 'after:now'],
-            'address' => ['required', 'string', 'max:500'],
-            'zone' => ['nullable', 'string', 'max:100'],
-            'client_phone' => ['required', 'string', 'max:30'],
-            'hair_details' => ['nullable', 'string', 'max:1000'],
-            'notes' => ['nullable', 'string', 'max:1000'],
+            'service_id' => [
+                'required',
+                'integer',
+                'regex:/^[0-9]+$/',
+                'exists:services,id',
+            ],
+            'scheduled_at' => [
+                'required',
+                'date',
+                'regex:/^\d{4}-\d{2}-\d{2}[T\s]\d{2}:\d{2}(?::\d{2})?$/',
+                'after:now',
+            ],
+            'address' => [
+                'required',
+                'string',
+                'max:500',
+                'regex:/^[\pL\pN\s\.,#\-\/º°]+$/u',
+            ],
+            'zone' => [
+                'nullable',
+                'string',
+                'max:100',
+                'regex:/^[\pL\pN\s\.,\-]+$/u',
+            ],
+            'client_phone' => [
+                'required',
+                'string',
+                'max:30',
+                'regex:/^\+?[0-9\s\-()]+$/',
+            ],
+            'hair_details' => [
+                'nullable',
+                'string',
+                'max:1000',
+                'regex:/^[\pL\pN\s\.,;:()¿?¡!"\'\-\#\/]+$/u',
+            ],
+            'notes' => [
+                'nullable',
+                'string',
+                'max:1000',
+                'regex:/^[\pL\pN\s\.,;:()¿?¡!"\'\-\#\/]+$/u',
+            ],
+        ], [
+            'service_id.regex' => 'El servicio seleccionado no es válido.',
+            'scheduled_at.regex' => 'La fecha y hora de la cita tiene un formato no válido.',
+            'address.regex' => 'La dirección solo debe contener letras, números y caracteres habituales de dirección (., #, -, /, º, °).',
+            'zone.regex' => 'La zona o sector solo debe contener letras, números, espacios y guiones.',
+            'client_phone.regex' => 'El teléfono solo debe contener números y signos válidos (+, -, espacios o paréntesis).',
+            'hair_details.regex' => 'Los detalles del cabello contienen caracteres no permitidos.',
+            'notes.regex' => 'Las notas contienen caracteres no permitidos.',
         ]);
 
         $service = Service::findOrFail($validated['service_id']);
@@ -73,7 +116,14 @@ class AppointmentController extends Controller
         }
 
         $validated = $request->validate([
-            'cancellation_reason' => ['nullable', 'string', 'max:500'],
+            'cancellation_reason' => [
+                'nullable',
+                'string',
+                'max:500',
+                'regex:/^[\pL\pN\s\.,;:()¿?¡!"\'\-\#\/]+$/u',
+            ],
+        ], [
+            'cancellation_reason.regex' => 'El motivo de cancelación contiene caracteres no permitidos.',
         ]);
 
         $appointment->update([
@@ -99,7 +149,14 @@ class AppointmentController extends Controller
 
         $validated = $request->validate([
             'status' => ['required', Rule::enum(AppointmentStatus::class)],
-            'stylist_id' => ['nullable', 'exists:users,id'],
+            'stylist_id' => [
+                'nullable',
+                'integer',
+                'regex:/^[0-9]+$/',
+                'exists:users,id',
+            ],
+        ], [
+            'stylist_id.regex' => 'El estilista asignado no es válido.',
         ]);
 
         $updateData = [
@@ -165,8 +222,21 @@ class AppointmentController extends Controller
         }
 
         $validated = $request->validate([
-            'rating' => ['required', 'integer', 'between:1,5'],
-            'comment' => ['nullable', 'string', 'max:1000'],
+            'rating' => [
+                'required',
+                'integer',
+                'between:1,5',
+                'regex:/^[1-5]$/',
+            ],
+            'comment' => [
+                'nullable',
+                'string',
+                'max:1000',
+                'regex:/^[\pL\pN\s\.,;:()¿?¡!"\'\-\#\/]+$/u',
+            ],
+        ], [
+            'rating.regex' => 'La calificación debe ser un número entero entre 1 y 5.',
+            'comment.regex' => 'El comentario contiene caracteres no permitidos.',
         ]);
 
         Review::updateOrCreate(

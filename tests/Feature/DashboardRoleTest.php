@@ -254,3 +254,68 @@ test('admin can assign stylist and update appointment status', function () {
         'status' => AppointmentStatus::Confirmed->value,
     ]);
 });
+
+test('booking appointment rejects corrupt or sql injection inputs with regex', function () {
+    $client = User::factory()->create(['role' => UserRole::Client]);
+    $service = Service::create([
+        'name' => 'Box Braids Clásicas',
+        'slug' => 'box-braids-clasicas',
+        'category' => 'Tradicionales',
+        'description' => 'Servicio a domicilio.',
+        'price' => 45.00,
+        'estimated_duration_minutes' => 180,
+        'is_active' => true,
+    ]);
+
+    $response = $this->actingAs($client)->post('/appointments', [
+        'service_id' => $service->id,
+        'scheduled_at' => now()->addDays(2)->format('Y-m-d H:i:s'),
+        'address' => "Av. Principal'; DROP TABLE appointments; -- <script>",
+        'zone' => 'Zona <script>alert(1)</script>',
+        'client_phone' => '0412-HACK-SQL',
+        'hair_details' => 'SELECT * FROM users WHERE admin = 1; <script>',
+        'notes' => 'DELETE FROM services; <script>',
+    ]);
+
+    $response->assertSessionHasErrors(['address', 'zone', 'client_phone', 'hair_details', 'notes']);
+});
+
+test('cancelling appointment and reviews reject corrupt inputs with regex', function () {
+    $client = User::factory()->create(['role' => UserRole::Client]);
+    $service = Service::create([
+        'name' => 'Trenzas Fulani',
+        'slug' => 'trenzas-fulani',
+        'category' => 'Étnicas',
+        'description' => 'Servicio a domicilio.',
+        'price' => 50.00,
+        'estimated_duration_minutes' => 180,
+        'is_active' => true,
+    ]);
+
+    $appointment = Appointment::create([
+        'appointment_code' => 'TRZ-RVW01',
+        'client_id' => $client->id,
+        'service_id' => $service->id,
+        'scheduled_at' => now()->addDay(),
+        'status' => AppointmentStatus::Pending,
+        'total_price' => $service->price,
+        'address' => 'Av. San Martín, Edif. Centro, Apto 1',
+        'client_phone' => '+58 412 1234567',
+    ]);
+
+    // Prueba cancelación con caracteres corruptos / inyección
+    $cancelResponse = $this->actingAs($client)->patch("/appointments/{$appointment->id}/cancel", [
+        'cancellation_reason' => "Motivo corrupto <script>alert('xss')</script> ; DROP TABLE;",
+    ]);
+    $cancelResponse->assertSessionHasErrors('cancellation_reason');
+
+    // Cambiar estado a completada para probar reseña
+    $appointment->update(['status' => AppointmentStatus::Completed]);
+
+    // Prueba reseña con rating no entero o comentario con inyección
+    $reviewResponse = $this->actingAs($client)->post("/appointments/{$appointment->id}/reviews", [
+        'rating' => '5; DROP TABLE;',
+        'comment' => "Excelente servicio <script>malicioso();</script> ' OR 1=1;",
+    ]);
+    $reviewResponse->assertSessionHasErrors(['rating', 'comment']);
+});

@@ -32,9 +32,16 @@ class NewPasswordController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'token' => ['required'],
-            'email' => ['required', 'email'],
+            'token' => ['required', 'string', 'regex:/^[a-zA-Z0-9]+$/'],
+            'email' => [
+                'required',
+                'email',
+                'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+            ],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'token.regex' => 'El token de recuperación no es válido.',
+            'email.regex' => 'El correo electrónico debe tener un formato válido.',
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we

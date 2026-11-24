@@ -17,15 +17,32 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[\pL\s\-\'\.]+$/u',
+            ],
             'email' => [
                 'required',
                 'string',
                 'lowercase',
                 'email',
                 'max:255',
+                'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.regex' => 'El nombre completo solo debe contener letras, espacios y guiones.',
+            'email.regex' => 'El correo electrónico debe tener un formato válido.',
         ];
     }
 }

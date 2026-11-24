@@ -50,6 +50,19 @@ test('email verification status is unchanged when the email address is unchanged
     $this->assertNotNull($user->refresh()->email_verified_at);
 });
 
+test('profile update rejects corrupt or sql injection inputs with regex', function () {
+    $user = User::factory()->create();
+
+    $response = $this
+        ->actingAs($user)
+        ->patch('/profile', [
+            'name' => "Admin'; DROP TABLE users; --",
+            'email' => "invalid'--@bad.com",
+        ]);
+
+    $response->assertSessionHasErrors(['name', 'email']);
+});
+
 test('user can delete their account', function () {
     $user = User::factory()->create();
 

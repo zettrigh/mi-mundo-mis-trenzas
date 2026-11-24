@@ -52,6 +52,7 @@ class RegisteredUserController extends Controller
                 'lowercase',
                 'email',
                 'max:255',
+                'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
                 'unique:'.User::class,
             ],
             'phone' => [
@@ -72,6 +73,7 @@ class RegisteredUserController extends Controller
             'cedula.regex' => 'La cédula de identidad solo debe contener números.',
             'cedula.min' => 'La cédula de identidad debe tener al menos 6 dígitos.',
             'cedula.max' => 'La cédula de identidad no debe exceder los 12 dígitos.',
+            'email.regex' => 'El correo electrónico debe tener un formato válido.',
             'phone.regex' => 'El teléfono solo debe contener números y signos válidos (+, -, espacios o paréntesis).',
             'address.regex' => 'La dirección solo debe contener letras, números y caracteres habituales de dirección (., #, -, /, º, °).',
         ]);
