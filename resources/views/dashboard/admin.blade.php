@@ -26,35 +26,57 @@
 
             <!-- Métricas Clave -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                    <div class="text-xs font-medium text-gray-500 uppercase tracking-wider">Citas Totales</div>
-                    <div class="mt-2 flex items-baseline justify-between">
-                        <span class="text-3xl font-extrabold text-gray-900">{{ $metrics['total_appointments'] }}</span>
-                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">Histórico</span>
+                <!-- 1. Citas Totales -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs font-medium text-gray-500 uppercase tracking-wider">Citas Totales</div>
+                        <div class="mt-2 flex items-baseline justify-between">
+                            <span class="text-3xl font-extrabold text-gray-900">{{ $metrics['total_appointments'] }}</span>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">Histórico</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200 bg-amber-50/30">
-                    <div class="text-xs font-medium text-amber-700 uppercase tracking-wider">Pendientes</div>
-                    <div class="mt-2 flex items-baseline justify-between">
-                        <span class="text-3xl font-extrabold text-amber-600">{{ $metrics['pending_appointments'] }}</span>
-                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">Pendientes</span>
+                <!-- 2. Pendientes -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200 bg-amber-50/30 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs font-medium text-amber-700 uppercase tracking-wider">Pendientes</div>
+                        <div class="mt-2 flex items-baseline justify-between">
+                            <span class="text-3xl font-extrabold text-amber-600">{{ $metrics['pending_appointments'] }}</span>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">Por Atender</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                    <div class="text-xs font-medium text-gray-500 uppercase tracking-wider">Completadas</div>
-                    <div class="mt-2 flex items-baseline justify-between">
-                        <span class="text-3xl font-extrabold text-emerald-600">{{ $metrics['completed_appointments'] }}</span>
-                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Realizadas</span>
+                <!-- 3. Canceladas -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-rose-200 bg-rose-50/30 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs font-medium text-rose-700 uppercase tracking-wider">Canceladas</div>
+                        <div class="mt-2 flex items-baseline justify-between">
+                            <span class="text-3xl font-extrabold text-rose-600">{{ $metrics['cancelled_appointments'] }}</span>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">Canceladas</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-                    <div class="text-xs font-medium text-gray-500 uppercase tracking-wider">Ingresos Completados</div>
-                    <div class="mt-2 flex items-baseline justify-between">
-                        <span class="text-3xl font-extrabold text-gray-900">${{ number_format($metrics['total_revenue'], 2) }}</span>
-                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800">USD</span>
+                <!-- 4. Ganancias (Semanal en USD y Bs.) -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-emerald-200 bg-emerald-50/30 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="text-xs font-medium text-emerald-800 uppercase tracking-wider">Ganancias</span>
+                            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Semana</span>
+                        </div>
+                        <div class="mt-2 flex items-baseline gap-1.5 flex-wrap">
+                            <span class="text-2xl sm:text-3xl font-extrabold text-gray-900">${{ number_format($metrics['weekly_revenue_usd'], 2) }}</span>
+                            <span class="text-xs font-semibold text-gray-500">USD</span>
+                        </div>
+                        <div class="text-xs font-semibold text-emerald-700 mt-1">
+                            ≈ Bs. {{ number_format($metrics['weekly_revenue_ves'], 2, ',', '.') }}
+                        </div>
+                    </div>
+                    <div class="text-[11px] text-gray-400 mt-2.5 pt-2 border-t border-emerald-100 flex items-center justify-between">
+                        <span>Resetea lunes 00:00</span>
+                        <span>Tasa: {{ number_format($metrics['exchange_rate_ves'], 2, ',', '.') }} Bs/$</span>
                     </div>
                 </div>
             </div>

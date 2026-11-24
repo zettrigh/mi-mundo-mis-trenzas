@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use App\Models\Review;
 use App\Models\Service;
 use App\Models\User;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -38,9 +39,28 @@ class DashboardController extends Controller
      */
     private function adminDashboard(Request $request): View
     {
+        $startOfWeek = now()->startOfWeek(CarbonInterface::MONDAY);
+
+        $weeklyRevenueUsd = (float) Appointment::where('status', AppointmentStatus::Completed)
+            ->where(function (Builder $query) use ($startOfWeek) {
+                $query->where('completed_at', '>=', $startOfWeek)
+                    ->orWhere(function (Builder $q) use ($startOfWeek) {
+                        $q->whereNull('completed_at')
+                            ->where('updated_at', '>=', $startOfWeek);
+                    });
+            })
+            ->sum('total_price');
+
+        $exchangeRate = (float) config('services.bcv.usd_rate', 60.00);
+        $weeklyRevenueVes = round($weeklyRevenueUsd * $exchangeRate, 2);
+
         $metrics = [
             'total_appointments' => Appointment::count(),
             'pending_appointments' => Appointment::where('status', AppointmentStatus::Pending)->count(),
+            'cancelled_appointments' => Appointment::where('status', AppointmentStatus::Cancelled)->count(),
+            'weekly_revenue_usd' => $weeklyRevenueUsd,
+            'weekly_revenue_ves' => $weeklyRevenueVes,
+            'exchange_rate_ves' => $exchangeRate,
             'confirmed_appointments' => Appointment::where('status', AppointmentStatus::Confirmed)->count(),
             'completed_appointments' => Appointment::where('status', AppointmentStatus::Completed)->count(),
             'total_revenue' => Appointment::where('status', AppointmentStatus::Completed)->sum('total_price'),

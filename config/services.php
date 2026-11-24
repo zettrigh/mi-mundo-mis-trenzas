@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'bcv' => [
+        'usd_rate' => (float) env('BCV_USD_RATE', 60.00),
+    ],
+
 ];
